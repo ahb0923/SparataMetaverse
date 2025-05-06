@@ -26,6 +26,9 @@ public class BaseController : MonoBehaviour
     // 넉백 지연 시간
     private float knockbackDuration = float.MaxValue;
 
+    // 바라보는 방향 변수
+    private bool isFacingLeft = false;
+
     protected virtual void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -46,7 +49,15 @@ public class BaseController : MonoBehaviour
     // 방향 벡터 받아와서 해당 방향으로 이동시키는 함수
     private void Movement(Vector2 direction)
     {
-        direction = direction * 5;
+        direction = direction * 20;
+        bool movingLeft = direction.x < 0;
+
+        // 이동 방향과 바라보는 방향이 다르다면 속도 반감
+        if (isFacingLeft != movingLeft && Mathf.Abs(direction.x) > 0.1f)
+        {
+            direction *= 0.5f;
+        }
+
         if (knockbackDuration > 0.0f)
         {
             direction *= 0.2f;
@@ -61,9 +72,9 @@ public class BaseController : MonoBehaviour
     private void Rotate(Vector2 direction)
     {
         float rotZ = Mathf.Atan2(direction.y, direction.x)*Mathf.Rad2Deg;
-        bool isLeft = Mathf.Abs(rotZ) > 90f;
+        isFacingLeft = Mathf.Abs(rotZ) > 90f;
 
-        characterRenderer.flipX = isLeft;
+        characterRenderer.flipX = isFacingLeft;
     }
 
 }
