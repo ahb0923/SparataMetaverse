@@ -72,7 +72,7 @@ public class PlayerController : BaseController
 
         float time = 0f;
 
-        // 위로
+        // 올라갈 때
         while (time < jumpDuration / 2f)
         {
             renderImgTrans.localPosition = Vector3.Lerp(start, peak, time / (jumpDuration / 2f));
@@ -80,7 +80,7 @@ public class PlayerController : BaseController
             yield return null;
         }
 
-        // 아래로
+        // 떨어질 때
         time = 0f;
         while (time < jumpDuration / 2f)
         {

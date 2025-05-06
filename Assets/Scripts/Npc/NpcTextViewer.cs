@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -79,6 +80,7 @@ public class NpcTextViewer : MonoBehaviour
             case ActionType.Yes:
                 selectWindow.gameObject.SetActive(false);
                 minigameWindow.gameObject.SetActive(true);
+                GameManager.Instance.OpenMinigame();
                 break;
             case ActionType.No:
                 selectWindow.gameObject.SetActive(false);
@@ -95,5 +97,9 @@ public class NpcTextViewer : MonoBehaviour
                 Debug.Log("Button Action Error!");
                 break;
         }
+    }
+    private void Update()
+    {
+        talkWindow.GetComponentInChildren<TextMeshProUGUI>().text = GameManager.Instance.FlappyPoint.ToString();
     }
 }

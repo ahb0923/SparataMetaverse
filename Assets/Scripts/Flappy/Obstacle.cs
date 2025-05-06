@@ -15,12 +15,12 @@ public class Obstacle : MonoBehaviour
 
     public float widthPadding = 4f;
 
-    public GameManager gameManager;
+    [SerializeField]
+    public Flappy gameManager;
+    
 
     public void Start()
     {
-        // 게임 시작 시 GameManager의 인스턴스를 가져와서 사용
-        //gameManager = GameManager.Instance;
     }
 
     public Vector3 SetRandomPlace(Vector3 lastPosition, int obstacleCount)
@@ -34,15 +34,16 @@ public class Obstacle : MonoBehaviour
         Vector3 placePosition = lastPosition + new Vector3(widthPadding, 0);
         placePosition.y = Random.Range(lowPosY, higPosY);
 
-        transform.position = placePosition;
+        transform.localPosition = placePosition;
 
         return placePosition;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        /*Player player = collision.GetComponent<Player>();
+        FlappyPlayer player = collision.GetComponent<FlappyPlayer>();
+
         if (player != null)
-            gameManager.AddScore(1);*/
+            gameManager.AddScore(1);
     }
 }
